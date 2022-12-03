@@ -1,0 +1,15 @@
+#Message Queue Install and Configure
+
+- name: Install Message Queue Package
+  apt:
+    name:
+      - rabbitmq-server
+    state: latest
+
+- name: Adding Openstack User
+  shell: 
+    rabbitmqctl add_user openstack pass123
+
+- name: Editing user permission
+  shell: 
+    rabbitmqctl set_permissions openstack ".*" ".*" ".*"

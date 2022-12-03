@@ -1,0 +1,29 @@
+#NTP Install and Configure
+
+- name: Installing NTP Package
+  apt:
+    name:
+      - chrony
+    state: latest
+
+- name: Editing Chrony Configuration File
+  lineinfile:
+        dest: /etc/chrony/chrony.conf
+        regexp: "server NTP_SERVER iburst"
+        line: "server 192.168.56.103 iburst"
+        state: present
+        backup: yes
+
+- name: Adding Key In Chrny Configuration File
+  lineinfile:
+        dest: /etc/chrony/chrony.conf
+        line: "allow 10.0.0.0/24"
+        state: present
+        backup: yes
+
+
+- name: Restart NTP Service
+  service:
+    name: chrony
+    state: restarted
+    enabled: true
